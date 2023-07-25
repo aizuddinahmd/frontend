@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import Filter from "../../components/Filter.svelte";
 import RecipeCard from "../../components/RecipeCard.svelte";
+require("dotenv").config();
 
 interface Recipe {
   id: number;
@@ -66,7 +67,7 @@ const pages = [
 const { slug } = Astro.params;
 
 const res = await fetch(
-  `https://api.spoonacular.com/recipes/complexSearch?type=${slug}&apiKey=44a285d632ba4ec2b08cffe374c72b33&number=12`
+  `https://api.spoonacular.com/recipes/complexSearch?type=${slug}&apiKey=${process.env.API_KEY}&number=12`
 );
 const data = await res.json();
 console.log("data", data);

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
   import FaSearch from "svelte-icons/fa/FaSearch.svelte";
-  import RecipeCard from './RecipeCard.svelte';
+  import RecipeCard from "./RecipeCard.svelte";
 
   interface Recipe {
     id: number;
@@ -10,39 +10,43 @@
     likes: number;
   }
 
-  let ingredients: string = '';
+  let ingredients: string = "";
   let recipes = [];
 
   const formatInput = (input: string) => {
     return input
-      .split(/\s*,\s*/)// Splits input by comma and removes whitespaces around commas
-      .map(str => str.replace(/\s+/g, ',+')) // Replaces whitespaces within words with '-'
-      .join(',+'); // Joins words with '+'
+      .split(/\s*,\s*/) // Splits input by comma and removes whitespaces around commas
+      .map((str) => str.replace(/\s+/g, ",+")) // Replaces whitespaces within words with '-'
+      .join(",+"); // Joins words with '+'
   };
 
   const fetchRecipes = async () => {
-    
     const formattedIngredients = formatInput(ingredients);
-    console.log(formattedIngredients)
-    const response = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${formattedIngredients}&number=12&apiKey=44a285d632ba4ec2b08cffe374c72b33`);
+    console.log(formattedIngredients);
+    const response = await fetch(
+      `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${formattedIngredients}&number=12&apiKey=${process.env.API_KEY}`
+    );
     const data = await response.json();
-    recipes = data.map((recipe:any) => ({
-      id: recipe.id, 
-      title: recipe.title, 
-      image: recipe.image, 
-      likes: recipe.likes
+    recipes = data.map((recipe: any) => ({
+      id: recipe.id,
+      title: recipe.title,
+      image: recipe.image,
+      likes: recipe.likes,
     }));
     console.log("recipes:", recipes);
     return recipes;
   };
-  
+
   onMount(fetchRecipes);
 </script>
 
 <div class="col-span-3">
   <div class="flex flex-row p-4">
     <div class="w-[450px]">
-      <form class="border-2 rounded flex flex-row" on:submit|preventDefault={fetchRecipes}>
+      <form
+        class="border-2 rounded flex flex-row"
+        on:submit|preventDefault={fetchRecipes}
+      >
         <span>
           <div class="icon">
             <FaSearch />
@@ -67,12 +71,10 @@
   </div>
   <div class="">
     <div class="grid grid-cols-3 gap-4">
-      <RecipeCard recipes={recipes} />
+      <RecipeCard {recipes} />
     </div>
   </div>
-
 </div>
-
 
 <style>
   .icon {
