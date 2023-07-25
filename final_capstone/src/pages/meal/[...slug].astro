@@ -1,0 +1,109 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Filter from "../../components/Filter.svelte";
+import RecipeCard from "../../components/RecipeCard.svelte";
+
+interface Recipe {
+  id: number;
+  title: string;
+  image: string;
+  likes: number;
+}
+
+export let recipes: Recipe[];
+
+const pages = [
+  {
+    slug: "main-course",
+    title: "Main Course",
+    text: "Delicious main course recipes",
+    id: 1,
+  },
+  {
+    slug: "side-dish",
+    title: "Side Dish",
+    text: "Tasty side dish recipes",
+    id: 2,
+  },
+  { slug: "dessert", title: "Dessert", text: "Sweet dessert recipes", id: 3 },
+  {
+    slug: "appetizer",
+    title: "Appetizer",
+    text: "Yummy appetizer recipes",
+    id: 4,
+  },
+  { slug: "salad", title: "Salad", text: "Healthy salad recipes", id: 5 },
+  { slug: "bread", title: "Bread", text: "Warm bread recipes", id: 6 },
+  {
+    slug: "breakfast",
+    title: "Breakfast",
+    text: "Start your day with these breakfast recipes",
+    id: 7,
+  },
+  { slug: "soup", title: "Soup", text: "Comforting soup recipes", id: 8 },
+  {
+    slug: "beverage",
+    title: "Beverage",
+    text: "Refreshing beverage recipes",
+    id: 9,
+  },
+  { slug: "sauce", title: "Sauce", text: "Rich sauce recipes", id: 10 },
+  {
+    slug: "marinade",
+    title: "Marinade",
+    text: "Flavorful marinade recipes",
+    id: 11,
+  },
+  {
+    slug: "fingerfood",
+    title: "Finger Food",
+    text: "Easy to eat finger food recipes",
+    id: 12,
+  },
+  { slug: "snack", title: "Snack", text: "Quick snack recipes", id: 13 },
+  { slug: "drink", title: "Drink", text: "Cooling drink recipes", id: 14 },
+];
+const { slug } = Astro.params;
+
+const res = await fetch(
+  `https://api.spoonacular.com/recipes/complexSearch?type=${slug}&apiKey=44a285d632ba4ec2b08cffe374c72b33&number=12`
+);
+const data = await res.json();
+console.log("data", data);
+recipes = data.results.map((recipe: any) => ({
+  id: recipe.id,
+  title: recipe.title,
+  image: recipe.image,
+  likes: recipe.likes,
+}));
+
+console.log(recipes);
+
+const page = pages.find((page) => page.slug === slug);
+if (!page) return Astro.redirect("/404");
+const { title, text } = page;
+---
+
+<Layout>
+  <section class="container w-[100%] mt-20">
+    <div class="col">
+      <div class="flex flex-col mt-[24px] grid grid-cols-4">
+        <div class="">
+          <Filter />
+        </div>
+        <div class="col-span-3">
+          <div class="uk-child-width-1-2 uk-child-width-1-3@s" data-uk-grid>
+            <div class="flex flex-row p-4">
+              <div class="w-[450px]">
+                <h1 class="text-xl italic">Search result for {slug}</h1>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+              <RecipeCard client:load recipes={recipes} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

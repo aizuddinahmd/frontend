@@ -1,0 +1,15 @@
+---
+const res = await fetch(
+  "https://api.spoonacular.com/recipes/findByIngredients?ingredients=apples,+flour,+sugar&number=2&apiKey=44a285d632ba4ec2b08cffe374c72b33"
+);
+const posts = await res.json();
+---
+
+<h1>Astro + Statamic 🚀</h1>
+{
+  posts.map((post) => (
+    <>
+      <h2 set:html={post.title} />
+    </>
+  ))
+}

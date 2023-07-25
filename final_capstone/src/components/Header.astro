@@ -1,0 +1,52 @@
+---
+import HeaderLink from "./HeaderLink.astro";
+import { SITE_TITLE } from "../consts";
+---
+
+<header class="sticky">
+  <nav class="container">
+    <div class="">
+      <div class="flex flex-row p-4">
+        <div class="flex flex-row gap-16">
+          <a class="uk-navbar-item logo" href="index.html">Recipedia</a>
+          <ul class="flex flex-row gap-4">
+            <li class="uk-active"><a href="index.html">Home</a></li>
+            <li><a href="recipe.html">Recipe</a></li>
+            <li><a href="search.html">Search</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<style>
+  header {
+    margin: 0em 0 2em;
+  }
+  h2 {
+    margin: 0.5em 0;
+  }
+
+  .logo {
+    font-size: 1.5625rem;
+    font-family: "LillyBelle", cursive;
+    color: #eb4a36;
+    /* 1 */
+    text-decoration: none;
+    font-weight: 400;
+  }
+
+  /* Hover + Focus */
+  .logo:hover,
+  .logo:focus {
+    color: #eb4a36;
+    outline: none;
+    /* 1 */
+    text-decoration: none;
+  }
+
+  .logo-inverse {
+    display: none;
+  }
+</style>

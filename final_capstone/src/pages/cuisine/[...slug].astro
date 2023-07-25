@@ -1,0 +1,223 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Filter from "../../components/Filter.svelte";
+import RecipeCard from "../../components/RecipeCard.svelte";
+
+interface Recipe {
+  id: number;
+  title: string;
+  image: string;
+  likes: number;
+}
+
+export let recipes: Recipe[];
+
+const pages = [
+  {
+    slug: "african",
+    title: "African",
+    text: "Taste the diverse flavors of Africa",
+    id: 1,
+  },
+  {
+    slug: "asian",
+    title: "Asian",
+    text: "Explore the rich culinary traditions of Asia",
+    id: 2,
+  },
+  {
+    slug: "american",
+    title: "American",
+    text: "Savor the comfort food of America",
+    id: 3,
+  },
+  {
+    slug: "british",
+    title: "British",
+    text: "Enjoy the hearty food of Britain",
+    id: 4,
+  },
+  {
+    slug: "cajun",
+    title: "Cajun",
+    text: "Spice it up with Cajun cuisine",
+    id: 5,
+  },
+  {
+    slug: "caribbean",
+    title: "Caribbean",
+    text: "Experience the tropical flavors of the Caribbean",
+    id: 6,
+  },
+  {
+    slug: "chinese",
+    title: "Chinese",
+    text: "Savor the vast cuisine of China",
+    id: 7,
+  },
+  {
+    slug: "eastern-european",
+    title: "Eastern European",
+    text: "Enjoy the comfort food of Eastern Europe",
+    id: 8,
+  },
+  {
+    slug: "european",
+    title: "European",
+    text: "Taste the rich and diverse cuisines of Europe",
+    id: 9,
+  },
+  {
+    slug: "french",
+    title: "French",
+    text: "Experience the elegance of French cuisine",
+    id: 10,
+  },
+  {
+    slug: "german",
+    title: "German",
+    text: "Savor the hearty and robust flavors of Germany",
+    id: 11,
+  },
+  {
+    slug: "greek",
+    title: "Greek",
+    text: "Delight in the fresh flavors of Greece",
+    id: 12,
+  },
+  {
+    slug: "indian",
+    title: "Indian",
+    text: "Indulge in the spicy and aromatic food of India",
+    id: 13,
+  },
+  {
+    slug: "irish",
+    title: "Irish",
+    text: "Enjoy the hearty comfort food of Ireland",
+    id: 14,
+  },
+  {
+    slug: "italian",
+    title: "Italian",
+    text: "Experience the diverse and delicious flavors of Italy",
+    id: 15,
+  },
+  {
+    slug: "japanese",
+    title: "Japanese",
+    text: "Savor the simplicity and freshness of Japanese cuisine",
+    id: 16,
+  },
+  {
+    slug: "jewish",
+    title: "Jewish",
+    text: "Experience the traditional food of the Jewish diaspora",
+    id: 17,
+  },
+  {
+    slug: "korean",
+    title: "Korean",
+    text: "Spice it up with flavorful Korean dishes",
+    id: 18,
+  },
+  {
+    slug: "latin-american",
+    title: "Latin American",
+    text: "Savor the vibrant and diverse cuisine of Latin America",
+    id: 19,
+  },
+  {
+    slug: "mediterranean",
+    title: "Mediterranean",
+    text: "Enjoy the healthy and fresh flavors of the Mediterranean",
+    id: 20,
+  },
+  {
+    slug: "mexican",
+    title: "Mexican",
+    text: "Spice up your meals with Mexican cuisine",
+    id: 21,
+  },
+  {
+    slug: "middle-eastern",
+    title: "Middle Eastern",
+    text: "Taste the aromatic and hearty cuisine of the Middle East",
+    id: 22,
+  },
+  {
+    slug: "nordic",
+    title: "Nordic",
+    text: "Experience the unique flavors of the Nordic countries",
+    id: 23,
+  },
+  {
+    slug: "southern",
+    title: "Southern",
+    text: "Taste the soulful food of the Southern US",
+    id: 24,
+  },
+  {
+    slug: "spanish",
+    title: "Spanish",
+    text: "Experience the vibrant and diverse food of Spain",
+    id: 25,
+  },
+  {
+    slug: "thai",
+    title: "Thai",
+    text: "Indulge in the spicy and fresh flavors of Thai food",
+    id: 26,
+  },
+  {
+    slug: "vietnamese",
+    title: "Vietnamese",
+    text: "Savor the fresh and flavorful cuisine of Vietnam",
+    id: 27,
+  },
+];
+
+const { slug } = Astro.params;
+
+const res = await fetch(
+  `https://api.spoonacular.com/recipes/complexSearch?type=${slug}&apiKey=44a285d632ba4ec2b08cffe374c72b33&number=12`
+);
+const data = await res.json();
+console.log("data", data);
+recipes = data.results.map((recipe: any) => ({
+  id: recipe.id,
+  title: recipe.title,
+  image: recipe.image,
+  likes: recipe.likes,
+}));
+
+console.log(recipes);
+
+const page = pages.find((page) => page.slug === slug);
+if (!page) return Astro.redirect("/404");
+const { title, text } = page;
+---
+
+<Layout>
+  <section class="container w-[100%] mt-20">
+    <div class="col">
+      <div class="flex flex-col mt-[24px] grid grid-cols-4">
+        <div class="">
+          <Filter />
+        </div>
+        <div class="col-span-3">
+          <div class="uk-child-width-1-2 uk-child-width-1-3@s" data-uk-grid>
+            <div class="flex flex-row p-4">
+              <div class="w-[450px]">
+                <h1 class="text-xl italic">Search result for {slug}</h1>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+              <RecipeCard client:load recipes={recipes} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

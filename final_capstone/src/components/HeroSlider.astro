@@ -1,0 +1,127 @@
+<section class="h9-slider-area">
+  <div class="h9-slider-active">
+    <div class="h9-slider-item pb-10 lg:pb-0" data-background="img/header.jpeg">
+      <div class="container mt-[50px] lg:mt-[30px]">
+        <div
+          class="flex flex-col lg:flex-row-reverse items-center justify-center lg:px-7 relative"
+        >
+          <div
+            class="h-full"
+            data-animation-in="fadeInLeft"
+            data-delay-in=".2"
+            data-duration-in="1.5"
+          >
+            <img
+              src="/img/header.jpeg"
+              alt=""
+              class="opacity-30 md:opacity-100 mt-0 rounded-3xl"
+            />
+          </div>
+
+          <div class="lg:mt-[100px] w-[50%] absolute text-white">
+            <div class="flex flex-col gap-4">
+              <div class="lg:w-fit flex flex-col gap-1/2">
+                <div
+                  data-animation-in="fadeInUp"
+                  data-delay-in=".4"
+                  data-duration-in="1.5"
+                  class="w-fit lg:w-full border-b-2 border-[#FF5400]"
+                >
+                </div>
+              </div>
+              <h2
+                class="text-6xl md:text-7xl tracking-[2px] font-semibold"
+                data-animation-in="fadeInUp"
+                data-delay-in=".6"
+                data-duration-in="1.5"
+              >
+                From Fridge to Feast
+              </h2>
+              <p
+                class="text-xl text-white font-semibold"
+                data-animation-in="fadeInUp"
+                data-delay-in=".8"
+                data-duration-in="1.5"
+              >
+                Let Your Ingredients Guide You to Perfect Recipes!
+              </p>
+
+              <!-- <a
+                href=""
+                class="btn lg:w-fit"
+                data-animation-in="fadeInUp"
+                data-delay-in="1.2"
+                data-duration-in="1.5"
+              >
+                Sign Up Today
+              </a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .h9-slider-area {
+    position: relative;
+  }
+  .h9-slider-area::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 46px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
+  }
+  .h9-slider-area::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 108px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
+  }
+  .h9-slider-item {
+    background-position: center;
+    background-size: cover;
+  }
+  .h9-slider-img {
+    margin-left: 50px;
+    min-height: 650px;
+    object-fit: cover;
+  }
+  .h9-slider-item .h7-slider-content {
+    margin-left: 40px;
+  }
+  .h9-slider-active .slick-arrow {
+    position: absolute;
+    left: 155px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    height: 48px;
+    width: 48px;
+    text-align: center;
+    line-height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: #fff;
+    color: #989898;
+    font-size: 14px;
+    transition: 0.3s linear;
+  }
+  .h9-slider-active .slick-arrow.slick-next {
+    left: auto;
+    right: 155px;
+  }
+  .h9-slider-active .slick-arrow:hover {
+    color: #fff;
+  }
+</style>
