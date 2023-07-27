@@ -2,6 +2,9 @@
   import { onMount } from "svelte";
   import FaSearch from "svelte-icons/fa/FaSearch.svelte";
   import RecipeCard from "./RecipeCard.svelte";
+  // import dotenv from "dotenv";
+
+  // dotenv.config();
 
   interface Recipe {
     id: number;
@@ -15,16 +18,16 @@
 
   const formatInput = (input: string) => {
     return input
-      .split(/\s*,\s*/) // Splits input by comma and removes whitespaces around commas
-      .map((str) => str.replace(/\s+/g, ",+")) // Replaces whitespaces within words with '-'
-      .join(",+"); // Joins words with '+'
+      .split(/\s*,\s*/)
+      .map((str) => str.replace(/\s+/g, ",+"))
+      .join(",+");
   };
 
   const fetchRecipes = async () => {
     const formattedIngredients = formatInput(ingredients);
     console.log(formattedIngredients);
     const response = await fetch(
-      `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${formattedIngredients}&number=12&apiKey=${process.env.API_KEY}`
+      `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${formattedIngredients}&number=12&apiKey=44a285d632ba4ec2b08cffe374c72b33`
     );
     const data = await response.json();
     recipes = data.map((recipe: any) => ({
